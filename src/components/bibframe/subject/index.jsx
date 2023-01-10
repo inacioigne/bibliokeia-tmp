@@ -21,7 +21,8 @@ export default function Subject() {
   });
   return (
     <Box sx={{ p: "1rem" }}>
-      <Typography variant="subtitle2" sx={{ p: "1rem" }}>Assunto</Typography>
+      <Typography variant="subtitle2" sx={{ pb: "1rem" }}
+      >Assunto</Typography>
       <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
         {fields.map((subject, index) => (
           <Box key={subject.id} sx={{ display: "flex", gap: "1rem" }}>

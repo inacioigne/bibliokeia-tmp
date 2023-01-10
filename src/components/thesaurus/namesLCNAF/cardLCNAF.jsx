@@ -42,14 +42,7 @@ export default function CardLCNAF({
   setNameDetails,
   setImgBK,
 }) {
-  const {
-    openSnack,
-    setOpenSnack,
-    message,
-    setMessage,
-    typeAlert,
-    setTypeAlert,
-  } = useAlertBK();
+  const { setOpenSnack, setMessage, setTypeAlert } = useAlertBK();
 
   const handleImport = () => {
     //setProgess(true);

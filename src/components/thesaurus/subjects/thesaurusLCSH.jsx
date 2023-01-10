@@ -29,6 +29,13 @@ import { ApiLoc } from "src/services/apiLoc/loc";
 // React Hooks
 import { useState, useEffect } from "react";
 
+// BiblioKeia Services
+// import ParserBK from "src/services/thesaurus/subjects/parserBK";
+import ParserLCSH from "src/services/thesaurus/subjects/parserLCSH";
+
+// BiblioKeia Components
+import CardLCSH from "./cardLCSH";
+
 export default function ThesaurusLCSH({
   open,
   setOpen,
@@ -37,6 +44,12 @@ export default function ThesaurusLCSH({
 }) {
   const [type, setType] = useState("all");
   const [collection, setCollection] = useState("LCSH_General");
+  const [subject, setSubject] = useState("");
+  const [page, setPage] = useState(1);
+  const [hits, setHits] = useState([]);
+  const [subjectDetails, setSubjectDetails] = useState(null);
+  const [uris, setUris] = useState(null);
+  const [openTranslate, setOpenTranslate] = useState(false);
 
   const getData = (
     subject = "",
@@ -65,9 +78,40 @@ export default function ThesaurusLCSH({
   const handleClose = () => {
     setOpen(false);
   };
+
+  const handleChange = (event) => {
+    setPage(1);
+    getData(event.target.value, type, collection, 1);
+    setSubject(event.target.value);
+  };
+
+  const handlePagination = (event, value) => {
+    let p = value == 1 ? 1 : value * 10 - 9;
+    setPage(value);
+    getData(subject, type, collection, p);
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const getDetails = (token) => {
+    ParserLCSH(token, setSubjectDetails, setUris);
+  };
+
   const handleSearch = (e) => {
     e.preventDefault();
     getData(subject, type, collection);
+  };
+
+  const inputPros = {
+    endAdornment: (
+      <InputAdornment position="end">
+        <IconButton color="primary" aria-label="search" type="submit">
+          <Search />
+        </IconButton>
+      </InputAdornment>
+    ),
   };
 
   return (
@@ -118,8 +162,8 @@ export default function ThesaurusLCSH({
                         </MenuItem>
                       </Select>
                     </FormControl>
-                      {/* Collection */}
-                      <FormControl fullWidth>
+                    {/* Collection */}
+                    <FormControl fullWidth>
                       <InputLabel id="collection">Coleção</InputLabel>
                       <Select
                         label="Coleção"
@@ -142,11 +186,63 @@ export default function ThesaurusLCSH({
                           LCSH - Temporal
                         </MenuItem>
                       </Select>
-                      </FormControl>
-
+                    </FormControl>
                   </Box>
+                  <TextField
+                    onChange={handleChange}
+                    value={subject}
+                    fullWidth
+                    label="Assunto"
+                    InputProps={inputPros}
+                  />
                 </Box>
               </form>
+              <Box>
+                <Typography
+                  variant="subtitle2"
+                  gutterBottom
+                  sx={{
+                    mt: "0.5rem",
+                  }}
+                >
+                  <i>Resultados:</i>
+                </Typography>
+                <List>
+                  {hits?.map((hit, index) => (
+                    <ListItem key={index} disablePadding>
+                      <Button
+                        sx={{ textTransform: "none" }}
+                        onClick={() => {
+                          let token = hit.uri.split("/")[5];
+                          getDetails(token);
+                        }}
+                      >
+                        {hit.aLabel}
+                      </Button>
+                    </ListItem>
+                  ))}
+                </List>
+                <Pagination
+                  count={4}
+                  page={page}
+                  onChange={handlePagination}
+                  color="primary"
+                />
+              </Box>
+            </Grid>
+            <Grid item xs={7}>
+              <Box
+                sx={{ display: "flex", justifyContent: "center", pl: "2rem" }}
+              >
+                {subjectDetails && (
+                  <CardLCSH
+                    subjectDetails={subjectDetails}
+                    setSubjectDetails={setSubjectDetails}
+                    setOpenBK={setOpenBK}
+                    setOpenTranslate={setOpenTranslate}
+                  />
+                )}
+              </Box>
             </Grid>
           </Grid>
         </DialogContent>

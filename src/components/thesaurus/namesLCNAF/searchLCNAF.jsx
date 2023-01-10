@@ -24,7 +24,7 @@ import { Search, Close } from "@mui/icons-material";
 import { useState, useEffect } from "react";
 
 // BiblioKeia Services
-import { api } from "src/services/api/api";
+import { ApiLoc } from "src/services/apiLoc/loc";
 import QueryLCNAF from "src/services/thesaurus/names/queryLCNAF";
 
 // BiblioKeia Components
@@ -44,8 +44,7 @@ export default function SearchLCNAF({
   const [img, setImg] = useState(null);
 
   const getData = (name, type) => {
-    api
-      .get("suggest2", {
+    ApiLoc.get("suggest2", {
         params: {
           q: `${name}`,
           rdftype: `${type}`,

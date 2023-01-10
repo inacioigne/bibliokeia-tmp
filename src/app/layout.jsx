@@ -9,6 +9,8 @@ import { ModeProvider } from "src/providers/mode";
 import { BfProvider } from "src/providers/bibframe";
 import { AlertProvider } from "src/providers/alerts";
 
+import Providers from "src/app/providers";
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
@@ -22,7 +24,10 @@ export default function RootLayout({ children }) {
       <ModeProvider>
         <BfProvider>
         <AlertProvider>
-          <body>{children}</body>
+        
+          <body>
+          <Providers />
+            {children}</body>
           </AlertProvider>
         </BfProvider>
       </ModeProvider>

@@ -20,6 +20,7 @@ import {
   Badge,
 } from "@mui/material/";
 import { Search, Close } from "@mui/icons-material";
+import { blue, red } from "@mui/material/colors/";
 
 // React Hooks
 import { useState, useEffect } from "react";
@@ -51,6 +52,7 @@ export default function ThesarusBK() {
   const [choise, setChoise] = useState(false);
   const [subjectBK, setSubjectBK] = useState(null);
   const [autorityBK, setautorityBK] = useState(null);
+  
 
   useEffect(() => {
     if (subjectBK?.tokenLSCH) {
@@ -74,6 +76,11 @@ export default function ThesarusBK() {
     setSubject("");
     setOpen(false);
     setActive(true);
+  };
+
+  const handleRecuse = () => {
+    setChoise(false);
+    setActive(false);
   };
 
   const handleSearch = (e) => {
@@ -124,9 +131,7 @@ export default function ThesarusBK() {
         <IconButton
           color="primary"
           aria-label="search"
-          //component="button"
           type="submit"
-          //onClick={handleSearch}
         >
           <Search />
         </IconButton>
@@ -155,7 +160,10 @@ export default function ThesarusBK() {
         response={response}
         setResponse={setResponse}
         setSubject={setSubject}
+        subjectBK={subjectBK}
         setSubjectBK={setSubjectBK}
+        setChoise={setChoise}
+        handleChoose={handleChoose}
       />
     </Box>
   );
