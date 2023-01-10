@@ -16,7 +16,6 @@ import {
 } from "@mui/material/";
 import {
   ImportContacts,
-  Subject,
   Language,
   Home,
   Person3,
@@ -24,6 +23,7 @@ import {
   DashboardCustomize,
 } from "@mui/icons-material/";
 import TitleIcon from "@mui/icons-material/Title";
+import SubjectIcon from "@mui/icons-material/Subject";
 
 import { blue } from "@mui/material/colors";
 
@@ -34,10 +34,10 @@ import BreadcrumbsBK from "src/components/nav/breadcrumbs";
 import Content from "src/components/bibframe/content";
 import Title from "src/components/bibframe/title";
 import Contribution from "src/components/bibframe/contribution";
+import Subject from "src/components/bibframe/subject";
 
 // Next Components
 import Link from "next/link";
-
 
 const menuStyle = {
   borderRadius: "6px",
@@ -69,15 +69,15 @@ import { useState } from "react";
 
 const metadados = [
   { label: "Tipo", icon: ImportContacts },
-  { label: "Título", icon: TitleIcon  },
-  { label: "Autor", icon: Person3   },
-  { label: "Assunto", icon: Subject },
-  { label: "Idioma", icon: Language  },
-  { label: "Classificação", icon: Class   },
+  { label: "Título", icon: TitleIcon },
+  { label: "Autor", icon: Person3 },
+  { label: "Assunto", icon: SubjectIcon },
+  { label: "Idioma", icon: Language },
+  { label: "Classificação", icon: Class },
 ];
 
 export default function Book() {
-    const [visible, setVisible] = useState(0);
+  const [visible, setVisible] = useState(0);
   return (
     <Container maxWidth="xl">
       <Box my={"1rem"}>
@@ -124,15 +124,13 @@ export default function Book() {
           </Paper>
         </Grid>
         <Grid item xs={9}>
-        <Paper>
-        {visible === 0 && <Content defaultType="Texto" />}
-        {visible === 1 && <Title />}
-        {visible === 2 && <Contribution />}
-
-            
-        </Paper>
+          <Paper>
+            {visible === 0 && <Content defaultType="Texto" />}
+            {visible === 1 && <Title />}
+            {visible === 2 && <Contribution />}
+            {visible === 3 && <Subject />}
+          </Paper>
         </Grid>
-
       </Grid>
     </Container>
   );

@@ -20,10 +20,9 @@ import { useState, useEffect } from "react";
 import { useBf } from "src/providers/bibframe";
 
 // BiblioKeia Services
-import GetType from "src/services/thesaurus/types"
+import GetType from "src/services/thesaurus/types";
 
 export default function Content({ defaultType }) {
-
   const [openMenu, setOpenMenu] = useState(false);
   const [disabled, setDisabled] = useState(false);
   const [value, setValue] = useState("");
